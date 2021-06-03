@@ -14,7 +14,7 @@ CC_SRC_LANGUAGE=${1:-"go"}
 CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 
 CC_RUNTIME_LANGUAGE=node # chaincode runtime language is node.js
-CC_SRC_PATH=/opt/gopath/src/github.com/epms/javascript
+CC_SRC_PATH=/opt/gopath/src/github.com/superapp/javascript
 echo "*******************************************************"
 echo entra javascript
 echo "*******************************************************"
@@ -34,17 +34,17 @@ cd ../basic-network
 docker-compose -f ./docker-compose.yml up -d cli
 docker ps -a
 
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode install -n epms -v 1.0 -p "$CC_SRC_PATH" -l "$CC_RUNTIME_LANGUAGE"
-docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode instantiate -o orderer.superapp.epm.com:7050 -C mychannel -n epms -l "$CC_RUNTIME_LANGUAGE" -v 1.0 -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode install -n superapp -v 1.0 -p "$CC_SRC_PATH" -l "$CC_RUNTIME_LANGUAGE"
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode instantiate -o orderer.superapp.epm.com:7050 -C mychannel -n superapp -l "$CC_RUNTIME_LANGUAGE" -v 1.0 -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
 sleep 10
-#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n epms -c '{"function":"initLedger","Args":[]}'
-#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n epms -c '{"function":"initOrg","Args":[]}'
-#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n epms -c '{"function":"initTransaction","Args":[]}'
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n superapp -c '{"function":"initLedger","Args":[]}'
+#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n superapp -c '{"function":"initOrg","Args":[]}'
+#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.superapp.epm.com/users/Admin@org1.superapp.epm.com/msp" cli peer chaincode invoke -o orderer.superapp.epm.com:7050 -C mychannel -n superapp -c '{"function":"initTransaction","Args":[]}'
 cat <<EOF
 
 Total setup execution time : $(($(date +%s) - starttime)) secs ...
 
-Next, use the EPMS applications to interact with the deployed EPMS contract.
+Next, use the superapp applications to interact with the deployed superapp contract.
 The EPMS applications are available in multiple programming languages.
 Follow the instructions for the programming language of your choice:
 

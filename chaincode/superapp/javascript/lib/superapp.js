@@ -6,7 +6,7 @@
 
 const { Contract } = require("fabric-contract-api");
 
-class EPMS extends Contract {
+class SuperApp extends Contract {
     async initLedger(ctx) {
         console.info("============= START : Initialize Ledger ===========");
         const user = [{ udi: "", name: "naren", epms: 1000 }];
@@ -168,4 +168,4 @@ class EPMS extends Contract {
     }
 }
 
-module.exports = EPMS;
+module.exports = SuperApp;
