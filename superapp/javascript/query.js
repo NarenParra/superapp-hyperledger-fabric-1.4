@@ -55,7 +55,7 @@ const query = async function (identity) {
         // queryEpm transaction - requires 1 argument, ex: ('queryEpm', 'Epm4')
         // queryAllEpms transaction - requires no arguments, ex: ('queryAllEpms')
         //const result = await contract.evaluateTransaction("queryAllEpms");
-        const result = await contract.evaluateTransaction("queryEpm", "user0");
+        const result = await contract.evaluateTransaction("queryUser", "user0");
         console.log(contract);
 
         return result;

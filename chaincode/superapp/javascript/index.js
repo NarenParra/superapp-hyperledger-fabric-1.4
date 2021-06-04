@@ -4,7 +4,7 @@
 
 "use strict";
 
-const EPMS = require("./lib/superapp");
+const superapp = require("./lib/superapp");
 
-module.exports.EPMS = EPMS;
-module.exports.contracts = [EPMS];
+module.exports.superapp = superapp;
+module.exports.contracts = [superapp];

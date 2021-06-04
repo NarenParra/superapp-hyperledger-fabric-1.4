@@ -7,7 +7,7 @@ const fs = require("fs");
 let query = require("./query.js");
 let registerUser = require("./registerUser.js");
 let registerAdmin = require("./enrollAdmin.js");
-let createUser = require("./invoke");
+let createUser = require("./invoke.js");
 
 //register admin
 app.post("/admin", async function (req, res) {
