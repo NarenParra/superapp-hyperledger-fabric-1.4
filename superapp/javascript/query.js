@@ -18,7 +18,7 @@ const ccpPath = path.resolve(
 const ccpJSON = fs.readFileSync(ccpPath, "utf8");
 const ccp = JSON.parse(ccpJSON);
 
-const query = async function (identity) {
+const queryUser = async function (identity) {
     try {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), "wallet");
@@ -65,4 +65,4 @@ const query = async function (identity) {
     }
 };
 
-exports.query = query;
+exports.queryUser = queryUser;

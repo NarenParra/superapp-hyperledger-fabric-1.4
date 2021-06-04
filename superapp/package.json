@@ -1,5 +1,5 @@
 {
-  "name": "epms",
+  "name": "superapp",
   "version": "1.0.0",
   "description": "blockchain node",
   "main": "app.js",

@@ -7,7 +7,7 @@ const fs = require("fs");
 let query = require("./query.js");
 let registerUser = require("./registerUser.js");
 let registerAdmin = require("./enrollAdmin.js");
-let createUser = require("./invoke.js");
+let createUser = require("./createUser");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -29,8 +29,9 @@ app.post("/user", async function (req, res) {
 // Query on chaincode on target peers
 app.get("/query", async function (req, res) {
     const { identity } = req.query;
-
-    let message = await query.query(identity);
+    console.log("---------------------------------identity-----------------");
+    console.log(identity);
+    let message = await query.queryUser(identity);
     res.send(message);
 });
 
