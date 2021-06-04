@@ -56,7 +56,7 @@ class SuperApp extends Contract {
     }
 
     async queryUser(ctx, userNumber) {
-        const epmAsBytes = await ctx.stub.getState(userNumber); // get the user from chaincode state
+        const userAsBytes = await ctx.stub.getState(userNumber); // get the user from chaincode state
         if (!userAsBytes || userAsBytes.length === 0) {
             throw new Error(`${userNumber} does not exist`);
         }
@@ -76,38 +76,6 @@ class SuperApp extends Contract {
 
         await ctx.stub.putState(userNumber, Buffer.from(JSON.stringify(user)));
         console.info("============= END : Create users ===========");
-    }
-
-    async queryAllEpms(ctx) {
-        const startKey = "user0";
-        const endKey = "user999";
-
-        const iterator = await ctx.stub.getStateByRange(startKey, endKey);
-
-        const allResults = [];
-        while (true) {
-            const res = await iterator.next();
-
-            if (res.value && res.value.value.toString()) {
-                console.log(res.value.value.toString("utf8"));
-
-                const Key = res.value.key;
-                let Record;
-                try {
-                    Record = JSON.parse(res.value.value.toString("utf8"));
-                } catch (err) {
-                    console.log(err);
-                    Record = res.value.value.toString("utf8");
-                }
-                allResults.push({ Key, Record });
-            }
-            if (res.done) {
-                console.log("end of data");
-                await iterator.close();
-                console.info(allResults);
-                return JSON.stringify(allResults);
-            }
-        }
     }
 }
 
