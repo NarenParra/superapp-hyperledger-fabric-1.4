@@ -4,7 +4,7 @@
 
 "use strict";
 
-const superapp = require("./lib/superapp");
+const SuperApp = require("./lib/superapp");
 
-module.exports.superapp = superapp;
-module.exports.contracts = [superapp];
+module.exports.SuperApp = SuperApp;
+module.exports.contracts = [SuperApp];

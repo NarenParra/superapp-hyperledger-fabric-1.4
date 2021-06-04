@@ -1,7 +1,7 @@
 {
-    "name": "epms",
+    "name": "superapp",
     "version": "1.0.0",
-    "description": "EPMS contract implemented in JavaScript",
+    "description": "SuperApp contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
         "node": ">=8",

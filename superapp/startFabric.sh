@@ -15,9 +15,6 @@ CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 
 CC_RUNTIME_LANGUAGE=node # chaincode runtime language is node.js
 CC_SRC_PATH=/opt/gopath/src/github.com/superapp/javascript
-echo "*******************************************************"
-echo entra javascript
-echo "*******************************************************"
 
 
 

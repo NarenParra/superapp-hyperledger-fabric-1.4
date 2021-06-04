@@ -6,7 +6,7 @@
 
 const { Contract } = require("fabric-contract-api");
 
-class superapp extends Contract {
+class SuperApp extends Contract {
     async initLedger(ctx) {
         console.info("============= START : Initialize Ledger ===========");
         const user = [{ udi: "", name: "naren", epms: 1000 }];
@@ -111,4 +111,4 @@ class superapp extends Contract {
     }
 }
 
-module.exports = superapp;
+module.exports = SuperApp;
