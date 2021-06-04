@@ -49,13 +49,14 @@ const query = async function (identity) {
         const network = await gateway.getNetwork("mychannel");
 
         // Get the contract from the network.
-        const contract = network.getContract("epms");
+        const contract = network.getContract("superapp");
 
         // Evaluate the specified transaction.
         // queryEpm transaction - requires 1 argument, ex: ('queryEpm', 'Epm4')
         // queryAllEpms transaction - requires no arguments, ex: ('queryAllEpms')
-        const result = await contract.evaluateTransaction("queryAllEpms");
-        // const result = await contract.evaluateTransaction("queryEpm", "EPM12");
+        //const result = await contract.evaluateTransaction("queryAllEpms");
+        const result = await contract.evaluateTransaction("queryEpm", "user0");
+        console.log(contract);
 
         return result;
     } catch (error) {

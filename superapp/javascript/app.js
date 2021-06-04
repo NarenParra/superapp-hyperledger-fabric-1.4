@@ -7,9 +7,7 @@ const fs = require("fs");
 let query = require("./query.js");
 let registerUser = require("./registerUser.js");
 let registerAdmin = require("./enrollAdmin.js");
-let buyEpms = require("./buyEpms.js");
-let buyMetroTickets = require("./buyMetroTickets.js");
-let payPredial = require("./payPredial");
+let createUser = require("./invoke");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -36,26 +34,9 @@ app.get("/query", async function (req, res) {
     res.send(message);
 });
 
-app.put("/buyepms", async function (req, res) {
-    try {
-        const { number, amount } = req.query;
-        let message = await buyEpms.buyEpms(number, amount);
-        res.send(message);
-    } catch (error) {
-        console.log(error);
-        res.send(error);
-    }
-});
-
-app.put("/buymetrotickets", async function (req, res) {
-    const { number, amount } = req.query;
-    let message = await buyMetroTickets.buyMetroTickets(number, amount);
-    res.send(message);
-});
-
-app.put("/paypredial", async function (req, res) {
-    const { number, amount } = req.query;
-    let message = await payPredial.payPredial(number, amount);
+app.post("/createuser", async function (req, res) {
+    const { identity, name, epms } = req.query;
+    let message = await createUser.createUser(identity, name, epms);
     res.send(message);
 });
 

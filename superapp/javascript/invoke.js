@@ -20,7 +20,7 @@ const ccp = JSON.parse(ccpJSON);
 
 let errror;
 
-async function main() {
+const createUser = async function (identity, name, epms) {
     try {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), "wallet");
@@ -28,22 +28,24 @@ async function main() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists("naren");
+        const userExists = await wallet.exists(identity);
         const user = await wallet.list();
         errror = userExists;
         if (!userExists) {
             console.log(
-                'An identity for the user "naren" does not exist in the wallet'
+                "An identity for the user identity does not exist in the wallet"
             );
             console.log("Run the registerUser.js application before retrying");
-            return;
+            return {
+                message: "Run the registerUser.js application before retrying",
+            };
         }
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
         await gateway.connect(ccp, {
             wallet,
-            identity: "naren",
+            identity: identity,
             discovery: { enabled: false },
         });
 
@@ -51,19 +53,11 @@ async function main() {
         const network = await gateway.getNetwork("mychannel");
 
         // Get the contract from the network.
-        const contract = network.getContract("epms");
+        const contract = network.getContract("superapp");
 
         // Submit the specified transaction.
         // createEpm transaction - requires 5 argument, ex: ('createEpm', 'EPM12', 'Honda', 'Accord', 'Black', 'Tom')
-
-        await contract.submitTransaction(
-            "createEpm",
-            "EPM12",
-            "Naren",
-            "99999",
-            "1500",
-            "0"
-        );
+        await contract.submitTransaction("createUser", "USER02", name, epms);
         console.log(`Transaction has been submitted ${user}`);
 
         console.log(user);
@@ -72,12 +66,16 @@ async function main() {
 
         // Disconnect from the gateway.
         await gateway.disconnect();
+
+        return {
+            message: `Transaction has been submitted ${user}`,
+        };
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         return {
             message: errror,
         };
     }
-}
+};
 
-main();
+exports.createUser = createUser;

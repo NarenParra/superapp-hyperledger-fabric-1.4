@@ -64,24 +64,23 @@ class SuperApp extends Contract {
         return epmAsBytes.toString();
     }
 
-    async createEpm(ctx, epmNumber, name, epms, train, predial) {
-        console.info("============= START : Create Epms ===========");
+    async createUser(ctx, userNumber, name, epms) {
+        console.info("============= START : Create user ===========");
 
-        const epm = {
-            name,
-            docType: "epm",
+        const user = {
+            udi: "1",
+            docType: "user",
             epms,
-            train,
-            predial,
+            name,
         };
 
-        await ctx.stub.putState(epmNumber, Buffer.from(JSON.stringify(epm)));
-        console.info("============= END : Create Epms ===========");
+        await ctx.stub.putState(userNumber, Buffer.from(JSON.stringify(user)));
+        console.info("============= END : Create users ===========");
     }
 
     async queryAllEpms(ctx) {
-        const startKey = "EPM0";
-        const endKey = "EPM999";
+        const startKey = "user0";
+        const endKey = "user999";
 
         const iterator = await ctx.stub.getStateByRange(startKey, endKey);
 
