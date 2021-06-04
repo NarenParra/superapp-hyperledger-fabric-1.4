@@ -9,7 +9,13 @@ const { Contract } = require("fabric-contract-api");
 class SuperApp extends Contract {
     async initLedger(ctx) {
         console.info("============= START : Initialize Ledger ===========");
-        const user = [{ udi: "", name: "naren", epms: 1000 }];
+        const user = [
+            {
+                udi: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
+                name: "prueba.user",
+                epms: 1000,
+            },
+        ];
 
         for (let i = 0; i < user.length; i++) {
             user[i].docType = "user";
@@ -25,12 +31,12 @@ class SuperApp extends Contract {
 
     async initOrg(ctx) {
         console.info("============= START : Initialize Ledger ===========");
-        const org = [{ udi: "", name: "org", epms: 1000 }];
+        const org = [{ name: "EPM", epms: 1000000 }];
 
         for (let i = 0; i < org.length; i++) {
             org[i].docType = "org";
             await ctx.stub.putState(
-                "org" + i,
+                "com.superapp.epm.org:epm@blockchain.epm.com",
                 Buffer.from(JSON.stringify(org[i]))
             );
             console.info("Added <--> ", org[i]);
@@ -41,7 +47,16 @@ class SuperApp extends Contract {
 
     async initTransaction(ctx) {
         console.info("============= START : Initialize Ledger ===========");
-        const transaction = [{ udi: "", name: "transaction", epms: 1000 }];
+        const transaction = [
+            {
+                udi: "",
+                uid_org: "",
+                uid_user: "",
+                epms: 0,
+                date: "",
+                descriptiom: "",
+            },
+        ];
 
         for (let i = 0; i < transaction.length; i++) {
             transaction[i].docType = "transaction";
@@ -64,18 +79,26 @@ class SuperApp extends Contract {
         return userAsBytes.toString();
     }
 
-    async createUser(ctx, userNumber, name, epms) {
-        console.info("============= START : Create user ===========");
+    async createUser(ctx, userId, name, epms) {
+        try {
+            console.info("============= START : Create user ===========");
 
-        const user = {
-            udi: "1",
-            docType: "user",
-            epms,
-            name,
-        };
+            const user = {
+                docType: "user",
+                epms,
+                name,
+            };
 
-        await ctx.stub.putState(userNumber, Buffer.from(JSON.stringify(user)));
-        console.info("============= END : Create users ===========");
+            await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
+            console.info("============= END : Create users ===========");
+            return {
+                message: "successful",
+            };
+        } catch (error) {
+            return {
+                message: error,
+            };
+        }
     }
 }
 

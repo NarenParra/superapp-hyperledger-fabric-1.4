@@ -32,10 +32,6 @@ const createUser = async function (identity, name, epms) {
         const user = await wallet.list();
         errror = userExists;
         if (!userExists) {
-            console.log(
-                "An identity for the user identity does not exist in the wallet"
-            );
-            console.log("Run the registerUser.js application before retrying");
             return {
                 message: "Run the registerUser.js application before retrying",
             };
@@ -54,21 +50,23 @@ const createUser = async function (identity, name, epms) {
 
         // Get the contract from the network.
         const contract = network.getContract("superapp");
+        const labelUser = user.find(({ label }) => label === identity);
+        const userId = `com.superapp.epm.usuario:${labelUser.label}@blockchain.epm.com`;
 
         // Submit the specified transaction.
         // createEpm transaction - requires 5 argument, ex: ('createEpm', 'EPM12', 'Honda', 'Accord', 'Black', 'Tom')
-        await contract.submitTransaction("createUser", "USER02", name, epms);
+        const message = await contract.submitTransaction(
+            "createUser",
+            userId,
+            name,
+            epms
+        );
         console.log(`Transaction has been submitted ${user}`);
-
-        console.log(user);
-
-        console.log(ccp);
-
         // Disconnect from the gateway.
         await gateway.disconnect();
 
         return {
-            message: `Transaction has been submitted ${user}`,
+            message: message,
         };
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
