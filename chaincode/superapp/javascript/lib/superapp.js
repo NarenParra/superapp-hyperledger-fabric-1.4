@@ -133,7 +133,9 @@ class SuperApp extends Contract {
             };
 
             await ctx.stub.putState(orgId, Buffer.from(JSON.stringify(org)));
-            return identity;
+            return {
+                message: "Transaction has been submitted from create user 1",
+            };
         } catch (error) {
             return {
                 message: error,

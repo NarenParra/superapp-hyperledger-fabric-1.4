@@ -60,7 +60,7 @@ const createOrg = async function (identity, name, epms) {
             generated,
             expend
         );
-        console.log(`Transaction has been submitted ${name}`);
+        console.log(`Transaction has been submitted from create org 1 ${name}`);
         // Disconnect from the gateway.
         await gateway.disconnect();
 

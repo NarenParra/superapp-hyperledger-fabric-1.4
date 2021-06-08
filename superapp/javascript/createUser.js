@@ -18,8 +18,6 @@ const ccpPath = path.resolve(
 const ccpJSON = fs.readFileSync(ccpPath, "utf8");
 const ccp = JSON.parse(ccpJSON);
 
-let errror;
-
 const createUser = async function (identity, name, epms) {
     try {
         // Create a new file system based wallet for managing identities.
@@ -30,7 +28,6 @@ const createUser = async function (identity, name, epms) {
         // Check to see if we've already enrolled the user.
         const userExists = await wallet.exists(identity);
         //  const user = await wallet.list();
-        errror = userExists;
         if (!userExists) {
             return {
                 message: "Run the registerUser.js application before retrying",
@@ -61,7 +58,7 @@ const createUser = async function (identity, name, epms) {
             name,
             epms
         );
-        console.log("Transaction has been submitted");
+        console.log("Transaction has been submitted from register user");
         // Disconnect from the gateway.
         await gateway.disconnect();
 
@@ -71,7 +68,7 @@ const createUser = async function (identity, name, epms) {
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         return {
-            message: errror,
+            message: error,
         };
     }
 };
