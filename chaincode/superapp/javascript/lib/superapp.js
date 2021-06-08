@@ -79,18 +79,19 @@ class SuperApp extends Contract {
         return userAsBytes.toString();
     }
 
-    async createUser(ctx, userId, name, epms) {
+    async createUser(ctx, name, epms) {
         try {
-            console.info("============= START : Create user ===========");
+            const identity = ctx.clientIdentity;
+            let userId = identity;
 
             const user = {
+                userId,
                 docType: "user",
                 epms,
                 name,
             };
 
             await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
-            console.info("============= END : Create users ===========");
             return {
                 message: "successful",
             };

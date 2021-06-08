@@ -50,14 +50,14 @@ const createUser = async function (identity, name, epms) {
 
         // Get the contract from the network.
         const contract = network.getContract("superapp");
-        const labelUser = user.find(({ label }) => label === identity);
-        const userId = `com.superapp.epm.usuario:${labelUser.label}@blockchain.epm.com`;
+        //const labelUser = user.find(({ label }) => label === identity);
+        //const userId = `com.superapp.epm.usuario:${labelUser.label}@blockchain.epm.com`;
 
         // Submit the specified transaction.
         // createEpm transaction - requires 5 argument, ex: ('createEpm', 'EPM12', 'Honda', 'Accord', 'Black', 'Tom')
         const message = await contract.submitTransaction(
             "createUser",
-            userId,
+            // userId,
             name,
             epms
         );

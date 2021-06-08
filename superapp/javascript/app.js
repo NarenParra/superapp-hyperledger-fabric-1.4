@@ -18,8 +18,21 @@ app.post("/admin", async function (req, res) {
 //register user
 app.post("/user", async function (req, res) {
     try {
-        const { name } = req.query;
-        let message = await registerUser.registerUser(name);
+        const { name, role, orgAffiliation, user, country, city } = req.query;
+        console.log(
+            "---------------------------------req.query-----------------"
+        );
+        console.log(req.query);
+        const orgMSP = "Org1MSP";
+        let message = await registerUser.registerUser(
+            name,
+            orgMSP,
+            role,
+            orgAffiliation,
+            user,
+            country,
+            city
+        );
         res.send(message);
     } catch (error) {
         return res.send(error);
