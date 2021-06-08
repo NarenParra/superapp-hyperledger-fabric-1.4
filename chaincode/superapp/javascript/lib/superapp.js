@@ -11,9 +11,12 @@ class SuperApp extends Contract {
         console.info("============= START : Initialize Ledger ===========");
         const user = [
             {
-                udi: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
-                name: "prueba.user",
+                userId: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
+                commonName: "prueba",
+                organizationName: "org1.superapp.epm.com",
+                docType: "user",
                 epms: 1000,
+                name: "prueba.user",
             },
         ];
 
@@ -31,12 +34,20 @@ class SuperApp extends Contract {
 
     async initOrg(ctx) {
         console.info("============= START : Initialize Ledger ===========");
-        const org = [{ name: "EPM", epms: 1000000 }];
+        const org = [
+            {
+                orgId: "com.superapp.epm.org:orgPrueba1",
+                name: "Prueba",
+                epms: 1000000,
+                generated: 0,
+                expend: 0,
+            },
+        ];
 
         for (let i = 0; i < org.length; i++) {
             org[i].docType = "org";
             await ctx.stub.putState(
-                "com.superapp.epm.org:epm@blockchain.epm.com",
+                "com.superapp.epm.org:orgPrueba1@blockchain.epm.com",
                 Buffer.from(JSON.stringify(org[i]))
             );
             console.info("Added <--> ", org[i]);
@@ -49,12 +60,11 @@ class SuperApp extends Contract {
         console.info("============= START : Initialize Ledger ===========");
         const transaction = [
             {
-                udi: "",
-                uid_org: "",
-                uid_user: "",
-                epms: 0,
-                date: "",
-                descriptiom: "",
+                userId: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
+                orgId: "orgPrueba1",
+                epms: 500,
+                date: "22/06/2021",
+                descriptiom: "incial transaction",
             },
         ];
 
@@ -81,20 +91,49 @@ class SuperApp extends Contract {
 
     async createUser(ctx, name, epms) {
         try {
-            const identity = ctx.clientIdentity;
-            let userId = identity;
+            const identity = ctx.clientIdentity.getX509Certificate();
+            const organizationName = identity.issuer.organizationName;
+            const commonName = identity.subject.commonName;
+            let userId = organizationName + "user:" + commonName;
 
             const user = {
                 userId,
+                commonName,
+                organizationName,
                 docType: "user",
                 epms,
                 name,
             };
 
             await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
+            return identity;
+        } catch (error) {
             return {
-                message: "successful",
+                message: error,
             };
+        }
+    }
+
+    async createOrg(ctx, name, epms, generated, expend) {
+        try {
+            const identity = ctx.clientIdentity.getX509Certificate();
+            const organizationName = identity.issuer.organizationName;
+            const commonName = identity.subject.commonName;
+            let orgId = organizationName + "org:" + commonName;
+
+            const org = {
+                orgId,
+                commonName,
+                organizationName,
+                docType: "org",
+                epms,
+                name,
+                generated,
+                expend,
+            };
+
+            await ctx.stub.putState(orgId, Buffer.from(JSON.stringify(org)));
+            return identity;
         } catch (error) {
             return {
                 message: error,

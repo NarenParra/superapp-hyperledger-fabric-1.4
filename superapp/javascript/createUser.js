@@ -29,7 +29,7 @@ const createUser = async function (identity, name, epms) {
 
         // Check to see if we've already enrolled the user.
         const userExists = await wallet.exists(identity);
-        const user = await wallet.list();
+        //  const user = await wallet.list();
         errror = userExists;
         if (!userExists) {
             return {
@@ -61,7 +61,7 @@ const createUser = async function (identity, name, epms) {
             name,
             epms
         );
-        console.log(`Transaction has been submitted ${user}`);
+        console.log("Transaction has been submitted");
         // Disconnect from the gateway.
         await gateway.disconnect();
 
