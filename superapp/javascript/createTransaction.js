@@ -19,8 +19,9 @@ const ccpJSON = fs.readFileSync(ccpPath, "utf8");
 const ccp = JSON.parse(ccpJSON);
 
 const createTransaction = async function (
-    identityUser,
-    identityOrg,
+    identity,
+    idUser,
+    idOrg,
     epms,
     description
 ) {
@@ -31,14 +32,14 @@ const createTransaction = async function (
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the Org.
-        const OrgExists = await wallet.exists(identityOrg);
-        const UserExists = await wallet.exists(identityUser);
+        const identityExists = await wallet.exists(identity);
+
         // const Org = await wallet.list();
-        if (!OrgExists) {
+        if (!identityExists) {
             return {
                 message: "Run the registerUser.js application before retrying",
             };
-        } else if (!UserExists) {
+        } else if (!identityExists) {
             return {
                 message: "Run the registerUser.js application before retrying",
             };
@@ -48,7 +49,7 @@ const createTransaction = async function (
         const gateway = new Gateway();
         await gateway.connect(ccp, {
             wallet,
-            identity: identityUser,
+            identity: identity,
             discovery: { enabled: false },
         });
 
@@ -63,8 +64,9 @@ const createTransaction = async function (
         const date = new Date().toLocaleDateString();
         const message = await contract.submitTransaction(
             "createTransaction",
-            identityUser,
-            identityOrg,
+            identity,
+            idUser,
+            idOrg,
             epms,
             date,
             description

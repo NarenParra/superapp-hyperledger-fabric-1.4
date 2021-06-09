@@ -48,10 +48,11 @@ app.post("/create-org", async function (req, res) {
 //create transaction
 app.post("/create-transaction", async function (req, res) {
     try {
-        const { identityUser, identityOrg, epms, description } = req.query;
+        const { identity, idUser, idOrg, epms, description } = req.query;
         let message = await createTransaction.createTransaction(
-            identityUser,
-            identityOrg,
+            identity,
+            idUser,
+            idOrg,
             epms,
             description
         );

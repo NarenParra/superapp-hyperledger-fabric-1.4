@@ -20,6 +20,7 @@ const ccp = JSON.parse(ccpJSON);
 
 const queryUser = async function (identity) {
     try {
+        console.log("*************************enra query");
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), "wallet");
         const wallet = new FileSystemWallet(walletPath);
@@ -55,7 +56,10 @@ const queryUser = async function (identity) {
         // queryEpm transaction - requires 1 argument, ex: ('queryEpm', 'Epm4')
         // queryAllEpms transaction - requires no arguments, ex: ('queryAllEpms')
         //const result = await contract.evaluateTransaction("queryAllEpms");
-        const result = await contract.evaluateTransaction("queryUser", "user0");
+        const result = await contract.evaluateTransaction(
+            "queryUser",
+            "org1.superapp.epm.comuser:naren"
+        );
         console.log(contract);
 
         return result;

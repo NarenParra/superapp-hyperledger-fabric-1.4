@@ -145,18 +145,25 @@ class SuperApp extends Contract {
 
     async createTransaction(
         ctx,
-        identityUser,
-        identityOrg,
+        identity,
+        idUser,
+        idOrg,
         epms,
         date,
         description
     ) {
         try {
-            let transId = "FIRTS TRANSACTION";
+            const identityCtx = ctx.clientIdentity.getX509Certificate();
+            const organizationName = identityCtx.issuer.organizationName;
+            const commonName = identityCtx.subject.commonName;
+            let transId =
+                organizationName + ".transaction:" + commonName + "." + date;
+
             const trans = {
                 transId,
-                identityOrg,
-                identityUser,
+                identity,
+                idUser,
+                idOrg,
                 docType: "trans",
                 epms,
                 date,
