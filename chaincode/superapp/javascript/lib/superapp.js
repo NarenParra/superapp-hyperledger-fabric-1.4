@@ -191,6 +191,8 @@ class SuperApp extends Contract {
                 transId,
                 Buffer.from(JSON.stringify(trans))
             );
+            await ctx.stub.putState(idUser, Buffer.from(JSON.stringify(user)));
+            await ctx.stub.putState(idOrg, Buffer.from(JSON.stringify(org)));
             return {
                 message: "Transaction has been submitted from create trans 1",
             };
