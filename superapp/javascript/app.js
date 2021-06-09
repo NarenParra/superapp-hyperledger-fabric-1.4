@@ -35,7 +35,7 @@ app.post("/user", async function (req, res) {
     }
 });
 //create organization
-app.get("/create-org", async function (req, res) {
+app.post("/create-org", async function (req, res) {
     try {
         const { identity, name, epms } = req.query;
 
@@ -46,10 +46,15 @@ app.get("/create-org", async function (req, res) {
     }
 });
 //create transaction
-app.get("/create-transaction", async function (req, res) {
+app.post("/create-transaction", async function (req, res) {
     try {
-        const { identity, name, epms } = req.query;
-        let message = await createUser.createUser(identity, name, epms);
+        const { identityUser, identityOrg, epms, description } = req.query;
+        let message = await createTransaction.createTransaction(
+            identityUser,
+            identityOrg,
+            epms,
+            description
+        );
         res.send(message);
     } catch (error) {
         return res.send(error);

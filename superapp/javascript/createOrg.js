@@ -50,8 +50,8 @@ const createOrg = async function (identity, name, epms) {
 
         // Submit the specified transaction.
         // createEpm transaction - requires 5 argument, ex: ('createEpm', 'EPM12', 'Honda', 'Accord', 'Black', 'Tom')
-        const generated = 0;
-        const expend = 0;
+        const generated = "0";
+        const expend = "0";
 
         const message = await contract.submitTransaction(
             "createOrg",

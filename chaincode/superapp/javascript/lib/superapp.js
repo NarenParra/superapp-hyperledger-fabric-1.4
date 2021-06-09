@@ -134,7 +134,34 @@ class SuperApp extends Contract {
 
             await ctx.stub.putState(orgId, Buffer.from(JSON.stringify(org)));
             return {
-                message: "Transaction has been submitted from create user 1",
+                message: "Transaction has been submitted from create org 1",
+            };
+        } catch (error) {
+            return {
+                message: error,
+            };
+        }
+    }
+
+    async createTransaction(ctx, identityUser, identityOrg, epms, description) {
+        try {
+            let transId = "FIRTS TRANSACTION";
+            const trans = {
+                transId,
+                identityOrg,
+                identityUser,
+                docType: "trans",
+                epms,
+                date,
+                description,
+            };
+
+            await ctx.stub.putState(
+                transId,
+                Buffer.from(JSON.stringify(trans))
+            );
+            return {
+                message: "Transaction has been submitted from create trans 1",
             };
         } catch (error) {
             return {
