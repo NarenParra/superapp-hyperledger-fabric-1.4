@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 
-let query = require("./query.js");
+//let query = require("./query.js");
 let registerUser = require("./registerUser.js");
 let registerAdmin = require("./enrollAdmin.js");
 let createUser = require("./createUser");

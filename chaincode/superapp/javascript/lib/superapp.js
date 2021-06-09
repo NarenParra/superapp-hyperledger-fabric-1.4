@@ -153,11 +153,28 @@ class SuperApp extends Contract {
         description
     ) {
         try {
+            const userAsBytes = await ctx.stub.getState(idUser);
+            const orgAsBytes = await ctx.stub.getState(idOrg);
+
+            if (!userAsBytes || userAsBytes.length === 0) {
+                throw new Error(`${userAsBytes} does not exist`);
+            }
+
+            if (!orgAsBytes || orgAsBytes.length === 0) {
+                throw new Error(`${orgAsBytes} does not exist`);
+            }
+
             const identityCtx = ctx.clientIdentity.getX509Certificate();
             const organizationName = identityCtx.issuer.organizationName;
             const commonName = identityCtx.subject.commonName;
             let transId =
                 organizationName + ".transaction:" + commonName + "." + date;
+
+            const user = JSON.parse(userAsBytes.toString());
+            user.epms = parseInt(user.epms) + parseInt(epms);
+
+            const org = JSON.parse(orgAsBytes.toString());
+            org.epms = parseInt(org.epms) - parseInt(epms);
 
             const trans = {
                 transId,
