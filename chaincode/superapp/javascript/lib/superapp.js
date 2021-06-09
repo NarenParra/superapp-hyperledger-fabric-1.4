@@ -143,7 +143,14 @@ class SuperApp extends Contract {
         }
     }
 
-    async createTransaction(ctx, identityUser, identityOrg, epms, description) {
+    async createTransaction(
+        ctx,
+        identityUser,
+        identityOrg,
+        epms,
+        date,
+        description
+    ) {
         try {
             let transId = "FIRTS TRANSACTION";
             const trans = {
