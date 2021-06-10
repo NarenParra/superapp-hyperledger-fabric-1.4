@@ -168,13 +168,18 @@ class SuperApp extends Contract {
             const organizationName = identityCtx.issuer.organizationName;
             const commonName = identityCtx.subject.commonName;
             let transId =
-                organizationName + ".transaction:" + commonName + "." + date;
-
+                organizationName +
+                ".transaction:" +
+                commonName +
+                "." +
+                Date.now();
+            //get user
             const user = JSON.parse(userAsBytes.toString());
             user.epms = parseInt(user.epms) + parseInt(epms);
-
+            //get org
             const org = JSON.parse(orgAsBytes.toString());
             org.epms = parseInt(org.epms) - parseInt(epms);
+            org.expend = parseInt(epms);
 
             const trans = {
                 transId,
