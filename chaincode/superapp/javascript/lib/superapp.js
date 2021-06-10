@@ -172,14 +172,9 @@ class SuperApp extends Contract {
     //get transactions 1 user
     async richQuery(ctx) {
         try {
-            let queryString = {};
-            queryString.selector = {};
-            queryString.selector.docType = "user";
-            queryString.selector.commonName = "naren";
+            let queryString = "naren";
 
-            const queryResults = await ctx.stub.getQueryResultForQueryString(
-                JSON.stringify(queryString)
-            );
+            const queryResults = await ctx.stub.getQueryResult(queryString);
             console.log("+++++++++++++++++++++++++++++++ queryResults");
             console.log(queryResults);
             return queryResults;
@@ -188,6 +183,18 @@ class SuperApp extends Contract {
                 message: error,
             };
         }
+    }
+
+    async getHistoryForAnyKey(ctx, id) {
+        if (!id || id.length === 0) {
+            throw new Error("Incorrect number of arguments. Expecting 1");
+        }
+
+        let resultsIterator = await ctx.stub.getHistoryForKey(id);
+        //let method = thisClass["getAllResults"];
+        // let results = await method(resultsIterator, true);
+
+        return Buffer.from(JSON.stringify(resultsIterator));
     }
 }
 
