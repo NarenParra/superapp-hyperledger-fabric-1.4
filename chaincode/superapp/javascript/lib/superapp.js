@@ -131,7 +131,7 @@ class SuperApp extends Contract {
             //get org
             const org = JSON.parse(orgAsBytes.toString());
             org.epms = parseInt(org.epms) - parseInt(epms);
-            org.expend = parseInt(epms);
+            org.expend = parseInt(org.expend) + parseInt(epms);
 
             const trans = {
                 transId,
@@ -168,6 +168,26 @@ class SuperApp extends Contract {
         }
 
         return objAsBytes.toString();
+    }
+    //get transactions 1 user
+    async richQuery(ctx) {
+        try {
+            let queryString = {};
+            queryString.selector = {};
+            queryString.selector.docType = "user";
+            queryString.selector.name = "naren";
+
+            const queryResults = await ctx.stub.getQueryResultForQueryString(
+                JSON.stringify(queryString)
+            );
+            console.log("+++++++++++++++++++++++++++++++ queryResults");
+            console.log(queryResults);
+            return queryResults;
+        } catch (error) {
+            return {
+                message: error,
+            };
+        }
     }
 }
 

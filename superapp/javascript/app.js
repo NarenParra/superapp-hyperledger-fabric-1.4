@@ -85,6 +85,16 @@ app.get("/single-obj", async function (req, res) {
     }
 });
 
+app.richQuery("/rich-obj", async function (req, res) {
+    try {
+        const { identity } = req.query;
+        let message = await query.singleQuery(identity);
+        res.send(message);
+    } catch (error) {
+        return res.send(error);
+    }
+});
+
 app.listen(8080, () => {
     console.log("server is running on port" + 8080);
 });
