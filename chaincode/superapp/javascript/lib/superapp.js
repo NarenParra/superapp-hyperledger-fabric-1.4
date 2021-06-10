@@ -32,54 +32,6 @@ class SuperApp extends Contract {
         console.info("============= END : Initialize Ledger ===========");
     }
 
-    async initOrg(ctx) {
-        console.info("============= START : Initialize Ledger ===========");
-        const org = [
-            {
-                orgId: "com.superapp.epm.org:orgPrueba1",
-                name: "Prueba",
-                epms: 1000000,
-                generated: 0,
-                expend: 0,
-            },
-        ];
-
-        for (let i = 0; i < org.length; i++) {
-            org[i].docType = "org";
-            await ctx.stub.putState(
-                "com.superapp.epm.org:orgPrueba1@blockchain.epm.com",
-                Buffer.from(JSON.stringify(org[i]))
-            );
-            console.info("Added <--> ", org[i]);
-        }
-
-        console.info("============= END : Initialize Ledger ===========");
-    }
-
-    async initTransaction(ctx) {
-        console.info("============= START : Initialize Ledger ===========");
-        const transaction = [
-            {
-                userId: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
-                orgId: "orgPrueba1",
-                epms: 500,
-                date: "22/06/2021",
-                descriptiom: "incial transaction",
-            },
-        ];
-
-        for (let i = 0; i < transaction.length; i++) {
-            transaction[i].docType = "transaction";
-            await ctx.stub.putState(
-                "transaction" + i,
-                Buffer.from(JSON.stringify(transaction[i]))
-            );
-            console.info("Added <--> ", transaction[i]);
-        }
-
-        console.info("============= END : Initialize Ledger ===========");
-    }
-
     async queryUser(ctx, userNumber) {
         const userAsBytes = await ctx.stub.getState(userNumber); // get the user from chaincode state
         if (!userAsBytes || userAsBytes.length === 0) {
@@ -206,6 +158,16 @@ class SuperApp extends Contract {
                 message: error,
             };
         }
+    }
+
+    async singleQuery(ctx, id) {
+        const objAsBytes = await ctx.stub.getState(id);
+
+        if (!objAsBytes || objAsBytes.length === 0) {
+            throw new Error(`${id} does not exist`);
+        }
+
+        return objAsBytes.toString();
     }
 }
 

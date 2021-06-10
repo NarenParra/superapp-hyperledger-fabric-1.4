@@ -63,7 +63,7 @@ const createUser = async function (identity, name, epms) {
         await gateway.disconnect();
 
         return {
-            message: message,
+            message: "Transaction has been submitted from register user",
         };
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);

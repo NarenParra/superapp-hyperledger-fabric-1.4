@@ -10,6 +10,7 @@ let registerAdmin = require("./enrollAdmin.js");
 let createUser = require("./createUser");
 let createOrg = require("./createOrg");
 let createTransaction = require("./createTransaction");
+let query = require("./singleQuery");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -67,6 +68,17 @@ app.post("/createuser", async function (req, res) {
     try {
         const { identity, name, epms } = req.query;
         let message = await createUser.createUser(identity, name, epms);
+        res.send(message);
+    } catch (error) {
+        return res.send(error);
+    }
+});
+
+//get single query
+app.get("/single-obj", async function (req, res) {
+    try {
+        const { identity, id } = req.query;
+        let message = await query.singleQuery(identity, id);
         res.send(message);
     } catch (error) {
         return res.send(error);

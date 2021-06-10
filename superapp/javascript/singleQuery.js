@@ -18,7 +18,7 @@ const ccpPath = path.resolve(
 const ccpJSON = fs.readFileSync(ccpPath, "utf8");
 const ccp = JSON.parse(ccpJSON);
 
-const queryUser = async function (identity) {
+const singleQuery = async function (identity, id) {
     try {
         console.log("*************************enra query");
         // Create a new file system based wallet for managing identities.
@@ -56,10 +56,7 @@ const queryUser = async function (identity) {
         // queryEpm transaction - requires 1 argument, ex: ('queryEpm', 'Epm4')
         // queryAllEpms transaction - requires no arguments, ex: ('queryAllEpms')
         //const result = await contract.evaluateTransaction("queryAllEpms");
-        const result = await contract.evaluateTransaction(
-            "queryUser",
-            "org1.superapp.epm.comuser:naren"
-        );
+        const result = await contract.evaluateTransaction("singleQuery", id);
         console.log(contract);
 
         return result;
@@ -69,4 +66,4 @@ const queryUser = async function (identity) {
     }
 };
 
-exports.queryUser = queryUser;
+exports.singleQuery = singleQuery;
