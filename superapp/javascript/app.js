@@ -12,6 +12,7 @@ let createOrg = require("./createOrg");
 let createTransaction = require("./createTransaction");
 let query = require("./singleQuery.js");
 let queryRich = require("./richQuery.js");
+let historyQuery = require("./historyQuery.js");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -90,6 +91,16 @@ app.get("/rich-obj", async function (req, res) {
     try {
         const { identity } = req.query;
         let message = await queryRich.richQuery(identity);
+        res.send(message);
+    } catch (error) {
+        return res.send(error);
+    }
+});
+
+app.get("/history", async function (req, res) {
+    try {
+        const { identity, id } = req.query;
+        let message = await historyQuery.historyQuery(identity, id);
         res.send(message);
     } catch (error) {
         return res.send(error);
