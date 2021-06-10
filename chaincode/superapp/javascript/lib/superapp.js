@@ -175,7 +175,7 @@ class SuperApp extends Contract {
             let queryString = {};
             queryString.selector = {};
             queryString.selector.docType = "user";
-            queryString.selector.name = "naren";
+            queryString.selector.commonName = "naren";
 
             const queryResults = await ctx.stub.getQueryResultForQueryString(
                 JSON.stringify(queryString)

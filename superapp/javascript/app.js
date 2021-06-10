@@ -10,8 +10,8 @@ let registerAdmin = require("./enrollAdmin.js");
 let createUser = require("./createUser");
 let createOrg = require("./createOrg");
 let createTransaction = require("./createTransaction");
-let query = require("./singleQuery");
-let queryRich = require("./richQuery");
+let query = require("./singleQuery.js");
+let queryRich = require("./richQuery.js");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -86,7 +86,7 @@ app.get("/single-obj", async function (req, res) {
     }
 });
 
-app.richQuery("/rich-obj", async function (req, res) {
+app.get("/rich-obj", async function (req, res) {
     try {
         const { identity } = req.query;
         let message = await queryRich.richQuery(identity);
