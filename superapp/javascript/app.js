@@ -11,6 +11,7 @@ let createUser = require("./createUser");
 let createOrg = require("./createOrg");
 let createTransaction = require("./createTransaction");
 let query = require("./singleQuery");
+let queryRich = require("./richQuery");
 
 //register admin
 app.post("/admin", async function (req, res) {
@@ -88,7 +89,7 @@ app.get("/single-obj", async function (req, res) {
 app.richQuery("/rich-obj", async function (req, res) {
     try {
         const { identity } = req.query;
-        let message = await query.singleQuery(identity);
+        let message = await queryRich.richQuery(identity);
         res.send(message);
     } catch (error) {
         return res.send(error);
