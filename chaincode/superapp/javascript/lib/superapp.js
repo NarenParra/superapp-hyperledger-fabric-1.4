@@ -159,7 +159,7 @@ class SuperApp extends Contract {
             const queryResults = await ctx.stub.getQueryResult(queryString);
             console.log("+++++++++++++++++++++++++++++++ queryResults");
             console.log(queryResults);
-            return queryResults;
+            return queryResults.toString();
         } catch (error) {
             return {
                 message: error,
@@ -176,7 +176,7 @@ class SuperApp extends Contract {
         //let method = thisClass["getAllResults"];
         // let results = await method(resultsIterator, true);
 
-        return Buffer.from(JSON.stringify(resultsIterator));
+        return resultsIterator.toString();
     }
 }
 
