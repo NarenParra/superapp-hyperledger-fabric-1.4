@@ -176,7 +176,7 @@ class SuperApp extends Contract {
         //let method = thisClass["getAllResults"];
         // let results = await method(resultsIterator, true);
 
-        return resultsIterator.toString();
+        return console.log(Buffer.from(JSON.stringify(resultsIterator)));
     }
 }
 

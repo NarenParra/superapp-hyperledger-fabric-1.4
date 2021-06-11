@@ -101,7 +101,12 @@ app.get("/history", async function (req, res) {
     try {
         const { identity, id } = req.query;
         let message = await historyQuery.historyQuery(identity, id);
-        res.send(message);
+        console.log("****************message");
+        console.log(Buffer.from(JSON.stringify(message)));
+        console.log(JSON.stringify(message));
+        console.log(message.toString());
+        console.log(message);
+        res.send(JSON.stringify(message));
     } catch (error) {
         return res.send(error);
     }
