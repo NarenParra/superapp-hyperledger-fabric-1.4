@@ -173,8 +173,9 @@ class SuperApp extends Contract {
         }
 
         let resultsIterator = await ctx.stub.getHistoryForKey(id);
-        //let method = thisClass["getAllResults"];
-        let results = await ctx.getAllResults(resultsIterator, true);
+
+        let method = ctx.stub["getAllResults"];
+        let results = await method(resultsIterator, true);
         console.log(Buffer.from(JSON.stringify(results)));
         return Buffer.from(JSON.stringify(results));
     }
