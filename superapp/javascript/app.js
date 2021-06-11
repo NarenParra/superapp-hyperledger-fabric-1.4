@@ -91,7 +91,10 @@ app.get("/rich-obj", async function (req, res) {
     try {
         const { identity } = req.query;
         let message = await queryRich.richQuery(identity);
-        res.send(message);
+        console.log("+++++++++++++++++++++++++++++++ queryResults");
+        console.log(message);
+        console.log(Buffer.from(JSON.stringify(message)));
+        res.send(Buffer.from(JSON.stringify(message)));
     } catch (error) {
         return res.send(error);
     }
@@ -102,11 +105,11 @@ app.get("/history", async function (req, res) {
         const { identity, id } = req.query;
         let message = await historyQuery.historyQuery(identity, id);
         console.log("****************message");
-        console.log(Buffer.from(JSON.stringify(message)));
-        console.log(JSON.stringify(message));
-        console.log(message.toString());
+        //  console.log(Buffer.from(JSON.stringify(message)));
+        //  console.log(JSON.stringify(message));
+        //  console.log(message.toString());
         console.log(message);
-        res.send(JSON.stringify(message));
+        res.send(message.toString());
     } catch (error) {
         return res.send(error);
     }
