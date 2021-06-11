@@ -3,33 +3,15 @@
  */
 
 "use strict";
+const shim = require("fabric-shim");
 
 const { Contract } = require("fabric-contract-api");
 
 class SuperApp extends Contract {
-    async initLedger(ctx) {
-        console.info("============= START : Initialize Ledger ===========");
-        const user = [
-            {
-                userId: "com.superapp.epm.usuario:prueba.user@blockchain.epm.com",
-                commonName: "prueba",
-                organizationName: "org1.superapp.epm.com",
-                docType: "user",
-                epms: 1000,
-                name: "prueba.user",
-            },
-        ];
-
-        for (let i = 0; i < user.length; i++) {
-            user[i].docType = "user";
-            await ctx.stub.putState(
-                "user" + i,
-                Buffer.from(JSON.stringify(user[i]))
-            );
-            console.info("Added <--> ", user[i]);
-        }
-
-        console.info("============= END : Initialize Ledger ===========");
+    async Init(ctx) {
+        let ret = ctx.stub.getFunctionAndParameters();
+        console.info(ret);
+        return shim.success();
     }
 
     async queryUser(ctx, userNumber) {
