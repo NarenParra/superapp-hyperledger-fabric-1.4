@@ -154,7 +154,14 @@ class SuperApp extends Contract {
     //get transactions 1 user
     async richQuery(ctx) {
         try {
-            let queryString = "naren";
+            let queryString = {
+                selector: {
+                    fechaCreacion: {
+                        $gte: fechaInicio,
+                        $lte: fechaFin,
+                    },
+                },
+            };
 
             const getAllResults2 = async (iterator, isHistory) => {
                 let allResults = [];
