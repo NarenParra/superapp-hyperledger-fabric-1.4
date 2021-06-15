@@ -3,6 +3,7 @@
  */
 
 "use strict";
+
 const shim = require("fabric-shim");
 
 const { Contract } = require("fabric-contract-api");
@@ -153,14 +154,12 @@ class SuperApp extends Contract {
     }
     //get transactions 1 user
     async richQuery(ctx) {
-        const fechaInicio = "6/15/2021";
-        const fechaFin = "9/15/2021";
         try {
-            let queryString = {
-                selector: {
-                    date: fechaInicio,
-                },
+            const queryObj = {
+                commonName: "naren",
             };
+
+            const queryString = JSON.stringify(queryObj);
 
             const getAllResults2 = async (iterator, isHistory) => {
                 let allResults = [];
@@ -207,9 +206,7 @@ class SuperApp extends Contract {
                 }
             };
 
-            const queryResults = await ctx.stub.getQueryResult(
-                JSON.stringify(queryString)
-            );
+            const queryResults = await ctx.stub.getQueryResult(queryString);
             let results = await getAllResults2(queryResults, false);
             return queryResults;
         } catch (error) {
