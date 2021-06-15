@@ -153,10 +153,12 @@ class SuperApp extends Contract {
     }
     //get transactions 1 user
     async richQuery(ctx) {
+        const fechaInicio = "5/15/2021";
+        const fechaFin = "9/15/2021";
         try {
             let queryString = {
                 selector: {
-                    fechaCreacion: {
+                    date: {
                         $gte: fechaInicio,
                         $lte: fechaFin,
                     },
