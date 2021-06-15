@@ -207,7 +207,9 @@ class SuperApp extends Contract {
                 }
             };
 
-            const queryResults = await ctx.stub.getQueryResult(queryString);
+            const queryResults = await ctx.stub.getQueryResult(
+                JSON.stringify(queryString)
+            );
             let results = await getAllResults2(queryResults, false);
             return queryResults;
         } catch (error) {
