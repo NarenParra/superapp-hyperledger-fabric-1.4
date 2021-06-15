@@ -158,11 +158,7 @@ class SuperApp extends Contract {
         try {
             let queryString = {
                 selector: {
-                    date: {
-                        $elemMatch: {
-                            $eq: fechaInicio,
-                        },
-                    },
+                    date: fechaInicio,
                 },
             };
 
