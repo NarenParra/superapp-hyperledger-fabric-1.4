@@ -4,21 +4,19 @@
 
 "use strict";
 
-const { FileSystemWallet, Gateway } = require("fabric-network");
-const fs = require("fs");
-const path = require("path");
+import { FileSystemWallet, Gateway } from "fabric-network";
+import path from "path";
+import { ccp } from "./createOrg";
 
-const ccpPath = path.resolve(
-    __dirname,
-    "..",
-    "..",
-    "basic-network",
-    "connection.json"
-);
-const ccpJSON = fs.readFileSync(ccpPath, "utf8");
-const ccp = JSON.parse(ccpJSON);
+  
 
-const createOrg = async function (identity, name, epms) {
+export const createTransaction = async function (
+    identity: string,
+    idUser: string,
+    idOrg: string,
+    epms: string,
+    description: string
+) {
     try {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), "wallet");
@@ -26,9 +24,14 @@ const createOrg = async function (identity, name, epms) {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the Org.
-        const OrgExists = await wallet.exists(identity);
+        const identityExists = await wallet.exists(identity);
+
         // const Org = await wallet.list();
-        if (!OrgExists) {
+        if (!identityExists) {
+            return {
+                message: "Run the registerUser.js application before retrying",
+            };
+        } else if (!identityExists) {
             return {
                 message: "Run the registerUser.js application before retrying",
             };
@@ -50,17 +53,17 @@ const createOrg = async function (identity, name, epms) {
 
         // Submit the specified transaction.
         // createEpm transaction - requires 5 argument, ex: ('createEpm', 'EPM12', 'Honda', 'Accord', 'Black', 'Tom')
-        const generated = "0";
-        const expend = "0";
-
+        const date = new Date().toLocaleDateString();
         const message = await contract.submitTransaction(
-            "createOrg",
-            name,
+            "createTransaction",
+            identity,
+            idUser,
+            idOrg,
             epms,
-            generated,
-            expend
+            date,
+            description
         );
-        console.log(`Transaction has been submitted from create org 1 ${name}`);
+        console.log(`Transaction has been submitted from create trans 1 `);
         // Disconnect from the gateway.
         await gateway.disconnect();
 
@@ -75,4 +78,3 @@ const createOrg = async function (identity, name, epms) {
     }
 };
 
-exports.createOrg = createOrg;

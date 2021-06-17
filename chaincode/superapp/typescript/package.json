@@ -1,0 +1,26 @@
+{
+  "name": "superapp",
+  "version": "1.0.0",
+  "description": "SuperApp contract implemented in JavaScript",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "scripts": {
+    "start": "fabric-chaincode-node start"
+  },
+  "engineStrict": true,
+  "author": "Hyperledger",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fabric-contract-api": "~1.4.0",
+    "fabric-shim": "~1.4.0",
+    "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "sinon": "^6.0.0",
+    "sinon-chai": "^3.2.0"
+  }
+}

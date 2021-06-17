@@ -4,21 +4,12 @@
 
 "use strict";
 
-const { FileSystemWallet, Gateway } = require("fabric-network");
-const fs = require("fs");
-const path = require("path");
+import { FileSystemWallet, Gateway } from "fabric-network";
+import path from "path";
+import { ccp } from "./createOrg";
 
-const ccpPath = path.resolve(
-    __dirname,
-    "..",
-    "..",
-    "basic-network",
-    "connection.json"
-);
-const ccpJSON = fs.readFileSync(ccpPath, "utf8");
-const ccp = JSON.parse(ccpJSON);
 
-const historyQuery = async function (identity, id) {
+export const richQuery = async function (identity: string) {
     try {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), "wallet");
@@ -54,10 +45,7 @@ const historyQuery = async function (identity, id) {
         // queryEpm transaction - requires 1 argument, ex: ('queryEpm', 'Epm4')
         // queryAllEpms transaction - requires no arguments, ex: ('queryAllEpms')
         //const result = await contract.evaluateTransaction("queryAllEpms");
-        const result = await contract.evaluateTransaction(
-            "getHistoryForAnyKey",
-            id
-        );
+        const result = await contract.evaluateTransaction("richQuery");
 
         return result;
     } catch (error) {
@@ -65,5 +53,3 @@ const historyQuery = async function (identity, id) {
         return error;
     }
 };
-
-exports.historyQuery = historyQuery;
