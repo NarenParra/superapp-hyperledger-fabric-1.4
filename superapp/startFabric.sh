@@ -13,7 +13,10 @@ starttime=$(date +%s)
 
 CC_RUNTIME_LANGUAGE=node # chaincode runtime language is node.js
 CC_SRC_PATH=/opt/gopath/src/github.com/superapp/typescript
-
+echo Compiling TypeScript code into JavaScript ...
+pushd ../chaincode/superapp/typescript
+popd
+echo Finished compiling TypeScript code into JavaScript
 # clean the keystore
 rm -rf ./hfc-key-store
 
