@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "SuperApp contract implemented in JavaScript",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "engines": {
-    "node": ">=8.4.0",
-    "npm": ">=5.3.0"
+    "node": ">=8",
+    "npm": ">=5"
   },
   "scripts": {
-    "start": "fabric-chaincode-node start"
+    "start": "fabric-chaincode-node start",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "prepublishOnly": "npm run build"
   },
   "engineStrict": true,
   "author": "Hyperledger",
@@ -19,9 +23,30 @@
     "typescript": "^4.3.2"
   },
   "devDependencies": {
-    "@types/node": "^15.12.2",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.10",
+    "@types/sinon": "^5.0.7",
+    "@types/sinon-chai": "^3.2.1",
     "chai": "^4.1.2",
+    "nyc": "^12.0.2",
     "sinon": "^6.0.0",
     "sinon-chai": "^3.2.0"
+  },
+  "nyc": {
+    "exclude": [
+      "coverage/**",
+      "test/**"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "all": true,
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100
   }
 }

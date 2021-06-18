@@ -1,14 +1,6 @@
-import shim from "fabric-shim";
-
 import { Context, Contract } from "fabric-contract-api";
 
 export class SuperApp extends Contract {
-  async Init(ctx: Context) {
-    let ret = ctx.stub.getFunctionAndParameters();
-    console.info(ret);
-    return shim.success();
-  }
-
   async queryUser(ctx: Context, userNumber: string) {
     const userAsBytes = await ctx.stub.getState(userNumber); // get the user from chaincode state
     if (!userAsBytes || userAsBytes.length === 0) {
@@ -21,6 +13,7 @@ export class SuperApp extends Contract {
   async createUser(ctx: Context, name: string, epms: number) {
     try {
       const identity = ctx;
+
       /*const organizationName = identity.issuer.organizationName;
       const commonName = identity.subject.commonName; */
       const organizationName = "orgName";
@@ -37,9 +30,7 @@ export class SuperApp extends Contract {
       };
 
       await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
-      return {
-        message: identity,
-      };
+      return identity;
     } catch (error) {
       return {
         message: error,
@@ -55,11 +46,10 @@ export class SuperApp extends Contract {
     expend: number
   ) {
     try {
-      /* const identity = ctx.clientIdentity.getX509Certificate();
-      const organizationName = identity.issuer.organizationName;
+      /*const organizationName = identity.issuer.organizationName;
       const commonName = identity.subject.commonName; */
       const organizationName = "orgName";
-      const commonName = "epm";
+      const commonName = "naren";
       let orgId = organizationName + "org:" + commonName;
 
       const org = {

@@ -1,4 +1,4 @@
-import { SuperApp } from "./superapp";
+import { SuperApp } from "./contract";
+export { SuperApp } from "./contract";
 
-module.exports.SuperApp = SuperApp;
-module.exports.contracts = [SuperApp];
+export const contracts: any[] = [SuperApp];
